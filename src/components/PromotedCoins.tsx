@@ -9,18 +9,21 @@ const promoted = [
     symbol: "NOVA",
     tagline: "Next-gen L2 with sub-second finality",
     accent: "from-primary/30 to-primary/5",
+    url: "#",
   },
   {
     name: "AstraDAO",
     symbol: "ASTRA",
     tagline: "Community-governed yield protocol",
     accent: "from-accent/30 to-accent/5",
+    url: "#",
   },
   {
     name: "PulseFi",
     symbol: "PLS",
     tagline: "DeFi made simple for everyone",
     accent: "from-success/25 to-success/5",
+    url: "#",
   },
 ];
 
@@ -79,7 +82,7 @@ export const PromotedCoins = () => {
               className="relative w-full bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
             >
               <a
-                href={WHATSAPP_URL}
+                href={coin.url}
                 target="_blank"
                 rel="noopener noreferrer"
               >

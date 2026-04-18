@@ -61,10 +61,15 @@ export default {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        "fdx-black": "hsl(var(--fdx-black))",
+        "fdx-gold": "hsl(var(--fdx-gold))",
+        "fdx-gold-light": "hsl(var(--fdx-gold-light))",
+        "fdx-gold-dark": "hsl(var(--fdx-gold-dark))",
       },
       backgroundImage: {
         "gradient-primary": "var(--gradient-primary)",
         "gradient-glow": "var(--gradient-glow)",
+        "gradient-fdx": "linear-gradient(135deg, hsl(var(--fdx-gold-light)), hsl(var(--fdx-gold)) 50%, hsl(var(--fdx-gold-dark)))",
       },
       boxShadow: {
         glow: "var(--shadow-glow)",

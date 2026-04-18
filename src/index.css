@@ -72,6 +72,13 @@
     --sidebar-accent-foreground: 30 15% 95%;
     --sidebar-border: 0 0% 18%;
     --sidebar-ring: 22 100% 55%;
+
+    /* FDX Coin — Luxury Gold & Deep Black */
+    --fdx-black: 0 0% 4%;
+    --fdx-black-soft: 0 0% 7%;
+    --fdx-gold: 45 90% 55%;
+    --fdx-gold-light: 48 100% 72%;
+    --fdx-gold-dark: 35 80% 38%;
   }
 
   .dark {
@@ -125,6 +132,29 @@
   .neon-glow {
     box-shadow: var(--shadow-glow);
   }
+
+  /* FDX Coin styles */
+  .fdx-page {
+    background:
+      radial-gradient(ellipse at top, hsl(var(--fdx-gold) / 0.12), transparent 60%),
+      radial-gradient(ellipse at bottom, hsl(var(--fdx-gold-dark) / 0.08), transparent 60%),
+      hsl(var(--fdx-black));
+    color: hsl(var(--foreground));
+  }
+
+  .fdx-card {
+    background: linear-gradient(135deg, hsl(var(--fdx-black-soft) / 0.85), hsl(var(--fdx-black) / 0.7));
+    border: 1px solid hsl(var(--fdx-gold) / 0.18);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.5), inset 0 1px 0 hsl(var(--fdx-gold) / 0.1);
+    transition: var(--transition-smooth);
+  }
+
+  .fdx-card:hover {
+    border-color: hsl(var(--fdx-gold) / 0.35);
+    box-shadow: 0 12px 40px hsl(0 0% 0% / 0.6), 0 0 30px hsl(var(--fdx-gold) / 0.1);
+  }
 }
 
 @layer utilities {
@@ -156,4 +186,12 @@
 
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @keyframes fdx-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .animate-fdx-float {
+    animation: fdx-float 4s ease-in-out infinite;
+  }
 }

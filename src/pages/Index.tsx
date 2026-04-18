@@ -4,6 +4,7 @@ import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
+import { PromotedCoins } from "@/components/PromotedCoins";
 import { useCryptoData } from "@/hooks/useCryptoData";
 
 const Index = () => {

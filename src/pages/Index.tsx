@@ -4,6 +4,7 @@ import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
+import { PromotedCoins } from "@/components/PromotedCoins";
 import { useCryptoData } from "@/hooks/useCryptoData";
 
 const Index = () => {
@@ -61,19 +62,23 @@ const Index = () => {
         ) : loading ? (
           <LoadingSpinner />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {/* Coins grid */}
-            <section className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5" aria-label="Cryptocurrency prices">
-              {coins.map((coin) => (
-                <CoinCard key={coin.id} coin={coin} />
-              ))}
-            </section>
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              {/* Coins grid */}
+              <section className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5" aria-label="Cryptocurrency prices">
+                {coins.map((coin) => (
+                  <CoinCard key={coin.id} coin={coin} />
+                ))}
+              </section>
 
-            {/* Sidebar */}
-            <aside className="lg:col-span-1">
-              <FearGreedWidget data={fng} loading={fngLoading} />
-            </aside>
-          </div>
+              {/* Sidebar */}
+              <aside className="lg:col-span-1">
+                <FearGreedWidget data={fng} loading={fngLoading} />
+              </aside>
+            </div>
+
+            <PromotedCoins />
+          </>
         )}
 
         {/* Footer CTA */}

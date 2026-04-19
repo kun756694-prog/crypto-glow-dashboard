@@ -91,16 +91,22 @@ const FdxCoin = () => {
           </div>
         </section>
 
+        <div className="fdx-divider max-w-3xl mx-auto mb-10" />
+
         {/* Order book + Staking */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-10">
           <OrderBook price={price} />
           <StakingSection price={price} />
         </section>
 
+        <div className="fdx-divider max-w-3xl mx-auto mb-10" />
+
         {/* Tokenomics */}
-        <section className="mb-8">
+        <section className="mb-10">
           <Tokenomics />
         </section>
+
+        <div className="fdx-divider max-w-3xl mx-auto mb-10" />
 
         {/* Roadmap */}
         <section className="mb-12">

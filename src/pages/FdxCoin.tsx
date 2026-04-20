@@ -39,9 +39,11 @@ const FdxCoin = () => {
         {/* Header */}
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg border border-fdx-gold/40 flex items-center justify-center bg-fdx-black/60">
-              <span className="text-fdx-gold font-black text-sm">FDX</span>
-            </div>
+            <img
+              src="/fdx-logo.png"
+              alt="FDX logo"
+              className="w-10 h-10 rounded-lg object-contain border border-fdx-gold/40 bg-fdx-black/60 p-1"
+            />
             <div>
               <h1 className="text-xl font-bold tracking-tight">
                 FDX <span className="text-fdx-gold">Coin</span>

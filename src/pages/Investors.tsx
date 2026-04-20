@@ -138,7 +138,7 @@ const Investors = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
             <Button asChild size="lg" variant="outline" className="glass border-primary/30">
-              <a href={WHITEPAPER_URL}>
+              <a href={WHITEPAPER_URL} target="_blank" rel="noopener noreferrer">
                 <FileText className="w-4 h-4" />
                 View Whitepaper
               </a>

@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
 
 const WHATSAPP_URL = "https://wa.me/601114614878";
-const WHITEPAPER_URL = "#";
+const WHITEPAPER_URL = "https://drive.google.com/file/d/1V4MouKmL_A0E9tKffTRkh3a439R8-2TR/view?usp=drivesdk";
 
 const metrics = [
   { label: "Current Price", value: "$0.0500", trend: "+12.00%", icon: TrendingUp },
@@ -138,7 +138,7 @@ const Investors = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
             <Button asChild size="lg" variant="outline" className="glass border-primary/30">
-              <a href={WHITEPAPER_URL}>
+              <a href={WHITEPAPER_URL} target="_blank" rel="noopener noreferrer">
                 <FileText className="w-4 h-4" />
                 View Whitepaper
               </a>

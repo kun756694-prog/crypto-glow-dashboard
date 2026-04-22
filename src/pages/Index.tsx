@@ -1,5 +1,6 @@
 import { AlertCircle, Linkedin, Sparkles } from "lucide-react";
 import { CoinCard } from "@/components/CoinCard";
+import { CryptoNews } from "@/components/CryptoNews";
 import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
@@ -78,6 +79,8 @@ const Index = () => {
             </div>
 
             <PromotedCoins />
+
+            <CryptoNews />
           </>
         )}
 

@@ -37,8 +37,16 @@ const Index = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
               </span>
-              {lastUpdated
-                ? `Updated ${lastUpdated.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`
+{lastUpdated
+                ? `Updated ${lastUpdated.toLocaleString('en-GB', {
+                    timeZone: 'Asia/Yangon',
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                  })}`
                 : "Connecting..."}
             </div>
           </div>

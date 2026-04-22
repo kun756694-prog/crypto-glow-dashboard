@@ -6,6 +6,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
 import { PromotedCoins } from "@/components/PromotedCoins";
+import { SiteFooter } from "@/components/SiteFooter";
 import { useCryptoData } from "@/hooks/useCryptoData";
 
 const Index = () => {
@@ -93,7 +94,7 @@ const Index = () => {
         )}
 
         {/* Footer CTA */}
-        <footer className="mt-14 mb-4 flex flex-col items-center gap-4">
+        <div className="mt-14 mb-4 flex flex-col items-center gap-4">
           <a
             href="https://www.linkedin.com"
             target="_blank"
@@ -106,8 +107,10 @@ const Index = () => {
           <p className="text-[11px] text-muted-foreground text-center max-w-md">
             Data from CoinGecko & Alternative.me. For informational purposes only — not financial advice.
           </p>
-        </footer>
+        </div>
       </div>
+
+      <SiteFooter />
     </div>
   );
 };

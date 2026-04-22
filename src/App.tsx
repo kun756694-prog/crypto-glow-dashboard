@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import FdxCoin from "./pages/FdxCoin";
 import Advertise from "./pages/Advertise";
 import Investors from "./pages/Investors";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/fdx" element={<FdxCoin />} />
           <Route path="/advertise" element={<Advertise />} />
           <Route path="/investors" element={<Investors />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

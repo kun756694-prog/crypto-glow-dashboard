@@ -27,7 +27,7 @@ export const MainNav = () => {
       </NavLink>
       <NavLink to="/investors" className={linkClasses}>
         <Briefcase className="w-3.5 h-3.5" />
-        Investors
+        Relations
       </NavLink>
     </nav>
   );

@@ -78,10 +78,7 @@ const Index = () => {
               {/* Coins grid */}
               <section className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5" aria-label="Cryptocurrency prices">
                 {coins.map((coin, i) => (
-                  <>
-                    <CoinCard key={coin.id} coin={coin} />
-                    {i === 0 && <UsdMmkRate key="usd-mmk" />}
-                  </>
+                  <FragmentWithRate key={coin.id} coin={coin} showRate={i === 0} />
                 ))}
               </section>
 

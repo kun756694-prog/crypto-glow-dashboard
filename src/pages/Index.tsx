@@ -1,5 +1,6 @@
 import { AlertCircle, Linkedin, Sparkles } from "lucide-react";
 import { CoinCard } from "@/components/CoinCard";
+import { UsdMmkRate } from "@/components/UsdMmkRate";
 import { CryptoNews } from "@/components/CryptoNews";
 import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
@@ -76,8 +77,11 @@ const Index = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               {/* Coins grid */}
               <section className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5" aria-label="Cryptocurrency prices">
-                {coins.map((coin) => (
-                  <CoinCard key={coin.id} coin={coin} />
+                {coins.map((coin, i) => (
+                  <>
+                    <CoinCard key={coin.id} coin={coin} />
+                    {i === 0 && <UsdMmkRate key="usd-mmk" />}
+                  </>
                 ))}
               </section>
 

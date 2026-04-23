@@ -47,8 +47,8 @@ const Privacy = () => {
             </p>
             <p className="text-xs pt-4 border-t border-border/40">
               Questions? Reach us at{" "}
-              <a href="mailto:hello@cryptopulse.com" className="text-primary hover:underline">
-                hello@cryptopulse.com
+              <a href="mailto:heinlay010002@gmail.com" className="text-primary hover:underline">
+                heinlay010002@gmail.com
               </a>
               .
             </p>

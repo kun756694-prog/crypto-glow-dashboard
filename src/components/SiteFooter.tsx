@@ -22,7 +22,7 @@ export const SiteFooter = () => {
               </Link>
               <span className="text-border">|</span>
               <a
-                href="mailto:hello@cryptopulse.com"
+href="mailto:heinlay010002@gmail.com"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 Contact
@@ -30,11 +30,11 @@ export const SiteFooter = () => {
             </nav>
 
             <a
-              href="mailto:hello@cryptopulse.com"
+href="mailto:heinlay010002@gmail.com"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Mail className="w-4 h-4" />
-              hello@cryptopulse.com
+              heinlay010002@gmail.com
             </a>
           </div>
 

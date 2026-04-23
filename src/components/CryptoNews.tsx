@@ -44,7 +44,7 @@ const NEWS: NewsItem[] = [
     source: "Arbitrum DAO",
     date: "2w ago",
     category: "DeFi",
-    url: "https://forum.arbitrum.foundation/",
+    url: "https://arbitrumfoundation.medium.com",
   },
 ];
 

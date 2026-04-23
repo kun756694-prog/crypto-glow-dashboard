@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { AlertCircle, Linkedin, Sparkles } from "lucide-react";
 import { CoinCard } from "@/components/CoinCard";
 import { UsdMmkRate } from "@/components/UsdMmkRate";
@@ -78,7 +79,10 @@ const Index = () => {
               {/* Coins grid */}
               <section className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5" aria-label="Cryptocurrency prices">
                 {coins.map((coin, i) => (
-                  <FragmentWithRate key={coin.id} coin={coin} showRate={i === 0} />
+                  <Fragment key={coin.id}>
+                    <CoinCard coin={coin} />
+                    {i === 0 && <UsdMmkRate />}
+                  </Fragment>
                 ))}
               </section>
 

@@ -39,8 +39,8 @@ const NEWS: NewsItem[] = [
   },
   {
     title: "Arbitrum DAO Approves $215M Gaming Catalyst Program",
-    excerpt:
-      "A major treasury allocation aims to onboard the next wave of Web3 gaming studios to the Arbitrum ecosystem over the next 24 months.",
+excerpt:
+      "The Arbitrum DAO has approved a historic $215 million treasury allocation to establish the Gaming Catalyst Program (GCP). This initiative will fund grants, investments, and technical support for Web3 gaming studios building on Arbitrum over the next 24 months. The program aims to position Arbitrum as the premier Layer 2 destination for blockchain gaming, offering developers comprehensive ecosystem support including marketing, infrastructure, and community building resources.",
     source: "Arbitrum DAO",
     date: "2w ago",
     category: "DeFi",

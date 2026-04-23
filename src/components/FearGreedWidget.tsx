@@ -30,10 +30,12 @@ export const FearGreedWidget = ({ data, loading }: Props) => {
         </span>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center mt-4">
+      <div className="flex-1 flex flex-col items-center justify-center mt-4 min-h-[208px]">
         {loading || !data ? (
-          <div className="h-40 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin-slow" />
+          <div className="w-full flex flex-col items-center justify-center gap-3">
+            <div className="w-48 h-24 rounded-md bg-muted/20 animate-pulse" />
+            <div className="w-16 h-10 rounded bg-muted/20 animate-pulse" />
+            <div className="w-24 h-4 rounded bg-muted/20 animate-pulse" />
           </div>
         ) : (
           <>

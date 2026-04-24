@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Sparkles, Coins, Megaphone, Briefcase, Wrench } from "lucide-react";
+import { Sparkles, Coins, Megaphone, Briefcase, Wrench, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const MainNav = () => {
@@ -24,6 +24,10 @@ export const MainNav = () => {
       <NavLink to="/toolbox" className={linkClasses}>
         <Wrench className="w-3.5 h-3.5" />
         Toolbox
+      </NavLink>
+      <NavLink to="/blog" className={linkClasses}>
+        <BookOpen className="w-3.5 h-3.5" />
+        Blog
       </NavLink>
       <NavLink to="/advertise" className={linkClasses}>
         <Megaphone className="w-3.5 h-3.5" />

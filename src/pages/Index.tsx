@@ -19,7 +19,7 @@ const Index = () => {
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[500px] bg-gradient-glow opacity-60" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         {/* Header */}
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
@@ -40,7 +40,7 @@ const Index = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
               </span>
-{lastUpdated
+              {lastUpdated
                 ? `Updated ${lastUpdated.toLocaleString('en-GB', {
                     timeZone: 'Asia/Yangon',
                     day: '2-digit',
@@ -113,7 +113,7 @@ const Index = () => {
             Data from CoinGecko & Alternative.me. For informational purposes only — not financial advice.
           </p>
         </div>
-      </div>
+      </main>
 
       <SiteFooter />
     </div>

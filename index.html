@@ -17,7 +17,27 @@
     <link rel="dns-prefetch" href="https://api.alternative.me">
     <link rel="dns-prefetch" href="https://open.er-api.com">
 
-    <script async defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983476764523029" crossorigin="anonymous"></script>
+    <script>
+      // Lazy-load AdSense after page is idle to improve LCP/FCP.
+      (function () {
+        function loadAds() {
+          if (window.__adsLoaded) return;
+          window.__adsLoaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983476764523029';
+          s.crossOrigin = 'anonymous';
+          document.head.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          window.addEventListener('load', function () {
+            requestIdleCallback(loadAds, { timeout: 4000 });
+          });
+        } else {
+          window.addEventListener('load', function () { setTimeout(loadAds, 3000); });
+        }
+      })();
+    </script>
 
     
     

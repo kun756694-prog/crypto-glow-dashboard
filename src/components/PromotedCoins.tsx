@@ -86,7 +86,7 @@ export const PromotedCoins = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Learn More
+                Visit {coin.name}
               </a>
             </Button>
           </article>

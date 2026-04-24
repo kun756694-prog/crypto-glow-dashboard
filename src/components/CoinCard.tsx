@@ -19,9 +19,10 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-primary/30 blur-md" />
             <img
-              src={coin.image}
+              src={coin.image.replace("/large/", "/small/")}
               alt={`${coin.name} logo`}
               loading="lazy"
+              decoding="async"
               width="40"
               height="40"
               className="relative w-10 h-10 rounded-full ring-1 ring-border"

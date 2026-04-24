@@ -83,20 +83,30 @@ const Index = () => {
                 {coins.map((coin, i) => (
                   <Fragment key={coin.id}>
                     <CoinCard coin={coin} />
-                    {i === 0 && <UsdMmkRate />}
+                    {i === 0 && (
+                      <Suspense fallback={<div className="glass-card min-h-[180px]" />}>
+                        <UsdMmkRate />
+                      </Suspense>
+                    )}
                   </Fragment>
                 ))}
               </section>
 
               {/* Sidebar */}
               <aside className="lg:col-span-1">
-                <FearGreedWidget data={fng} loading={fngLoading} />
+                <Suspense fallback={<div className="glass-card min-h-[300px]" />}>
+                  <FearGreedWidget data={fng} loading={fngLoading} />
+                </Suspense>
               </aside>
             </div>
 
-            <PromotedCoins />
+            <Suspense fallback={<div className="mt-8 min-h-[200px]" />}>
+              <PromotedCoins />
+            </Suspense>
 
-            <CryptoNews />
+            <Suspense fallback={<div className="mt-8 min-h-[400px]" />}>
+              <CryptoNews />
+            </Suspense>
           </>
         )}
 

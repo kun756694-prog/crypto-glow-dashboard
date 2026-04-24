@@ -113,7 +113,7 @@ const Index = () => {
             Data from CoinGecko & Alternative.me. For informational purposes only — not financial advice.
           </p>
         </div>
-      </div>
+      </main>
 
       <SiteFooter />
     </div>

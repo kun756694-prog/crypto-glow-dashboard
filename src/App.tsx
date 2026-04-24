@@ -14,6 +14,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Toolbox = lazy(() => import("./pages/Toolbox"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 
 const queryClient = new QueryClient();
 
@@ -72,6 +74,22 @@ const App = () => (
             element={
               <Suspense fallback={<RouteFallback />}>
                 <Terms />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Blog />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <BlogPost />
               </Suspense>
             }
           />

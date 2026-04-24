@@ -21,6 +21,10 @@ export const SiteFooter = () => {
                 Terms of Service
               </Link>
               <span className="text-border">|</span>
+              <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                Blog
+              </Link>
+              <span className="text-border">|</span>
               <a
 href="mailto:heinlay010002@gmail.com"
                 className="text-muted-foreground hover:text-primary transition-colors"

@@ -5,17 +5,19 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import FdxCoin from "./pages/FdxCoin";
-import Advertise from "./pages/Advertise";
-import Investors from "./pages/Investors";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import NotFound from "./pages/NotFound";
 
-// Code-split the toolbox so its widgets never load on the main dashboard
+// Code-split secondary routes so they don't bloat the initial bundle
+const FdxCoin = lazy(() => import("./pages/FdxCoin"));
+const Advertise = lazy(() => import("./pages/Advertise"));
+const Investors = lazy(() => import("./pages/Investors"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const Toolbox = lazy(() => import("./pages/Toolbox"));
 
 const queryClient = new QueryClient();
+
+const RouteFallback = () => <div className="min-h-screen" />;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,21 +27,63 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/fdx" element={<FdxCoin />} />
-          <Route path="/advertise" element={<Advertise />} />
-          <Route path="/investors" element={<Investors />} />
+          <Route
+            path="/fdx"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <FdxCoin />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/advertise"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Advertise />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/investors"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Investors />
+              </Suspense>
+            }
+          />
           <Route
             path="/toolbox"
             element={
-              <Suspense fallback={<div className="min-h-screen" />}>
+              <Suspense fallback={<RouteFallback />}>
                 <Toolbox />
               </Suspense>
             }
           />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route
+            path="/privacy"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Privacy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <Terms />
+              </Suspense>
+            }
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

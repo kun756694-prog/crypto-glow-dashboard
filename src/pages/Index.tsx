@@ -1,15 +1,17 @@
-import { Fragment } from "react";
+import { Fragment, lazy, Suspense } from "react";
 import { AlertCircle, Linkedin, Sparkles } from "lucide-react";
 import { CoinCard } from "@/components/CoinCard";
-import { UsdMmkRate } from "@/components/UsdMmkRate";
-import { CryptoNews } from "@/components/CryptoNews";
-import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
-import { PromotedCoins } from "@/components/PromotedCoins";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useCryptoData } from "@/hooks/useCryptoData";
+
+// Below-the-fold components — lazy-loaded to shrink the initial JS bundle
+const UsdMmkRate = lazy(() => import("@/components/UsdMmkRate").then(m => ({ default: m.UsdMmkRate })));
+const CryptoNews = lazy(() => import("@/components/CryptoNews").then(m => ({ default: m.CryptoNews })));
+const FearGreedWidget = lazy(() => import("@/components/FearGreedWidget").then(m => ({ default: m.FearGreedWidget })));
+const PromotedCoins = lazy(() => import("@/components/PromotedCoins").then(m => ({ default: m.PromotedCoins })));
 
 const Index = () => {
   const { coins, fng, loading, fngLoading, error, lastUpdated } = useCryptoData();
@@ -81,20 +83,30 @@ const Index = () => {
                 {coins.map((coin, i) => (
                   <Fragment key={coin.id}>
                     <CoinCard coin={coin} />
-                    {i === 0 && <UsdMmkRate />}
+                    {i === 0 && (
+                      <Suspense fallback={<div className="glass-card min-h-[180px]" />}>
+                        <UsdMmkRate />
+                      </Suspense>
+                    )}
                   </Fragment>
                 ))}
               </section>
 
               {/* Sidebar */}
               <aside className="lg:col-span-1">
-                <FearGreedWidget data={fng} loading={fngLoading} />
+                <Suspense fallback={<div className="glass-card min-h-[300px]" />}>
+                  <FearGreedWidget data={fng} loading={fngLoading} />
+                </Suspense>
               </aside>
             </div>
 
-            <PromotedCoins />
+            <Suspense fallback={<div className="mt-8 min-h-[200px]" />}>
+              <PromotedCoins />
+            </Suspense>
 
-            <CryptoNews />
+            <Suspense fallback={<div className="mt-8 min-h-[400px]" />}>
+              <CryptoNews />
+            </Suspense>
           </>
         )}
 

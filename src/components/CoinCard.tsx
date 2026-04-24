@@ -26,7 +26,7 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
             />
           </div>
           <div>
-            <h3 className="font-semibold text-base leading-tight">{coin.name}</h3>
+            <h2 className="font-semibold text-base leading-tight">{coin.name}</h2>
             <p className="text-xs text-muted-foreground uppercase tracking-wider">{coin.symbol}</p>
           </div>
         </div>

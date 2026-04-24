@@ -1,15 +1,17 @@
-import { Fragment } from "react";
+import { Fragment, lazy, Suspense } from "react";
 import { AlertCircle, Linkedin, Sparkles } from "lucide-react";
 import { CoinCard } from "@/components/CoinCard";
-import { UsdMmkRate } from "@/components/UsdMmkRate";
-import { CryptoNews } from "@/components/CryptoNews";
-import { FearGreedWidget } from "@/components/FearGreedWidget";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
-import { PromotedCoins } from "@/components/PromotedCoins";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useCryptoData } from "@/hooks/useCryptoData";
+
+// Below-the-fold components — lazy-loaded to shrink the initial JS bundle
+const UsdMmkRate = lazy(() => import("@/components/UsdMmkRate").then(m => ({ default: m.UsdMmkRate })));
+const CryptoNews = lazy(() => import("@/components/CryptoNews").then(m => ({ default: m.CryptoNews })));
+const FearGreedWidget = lazy(() => import("@/components/FearGreedWidget").then(m => ({ default: m.FearGreedWidget })));
+const PromotedCoins = lazy(() => import("@/components/PromotedCoins").then(m => ({ default: m.PromotedCoins })));
 
 const Index = () => {
   const { coins, fng, loading, fngLoading, error, lastUpdated } = useCryptoData();

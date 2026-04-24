@@ -22,6 +22,8 @@ export const CoinCard = ({ coin }: CoinCardProps) => {
               src={coin.image}
               alt={`${coin.name} logo`}
               loading="lazy"
+              width="40"
+              height="40"
               className="relative w-10 h-10 rounded-full ring-1 ring-border"
             />
           </div>

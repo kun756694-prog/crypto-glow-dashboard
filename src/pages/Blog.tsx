@@ -66,14 +66,25 @@ const Blog = () => {
               to={`/blog/${post.slug}`}
               className="glass-card p-6 group hover:border-primary/40 transition-colors flex flex-col"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/15 text-primary border border-primary/30">
-                  {post.category}
-                </span>
-                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="w-3 h-3" />
-                  {post.readMinutes} min read
-                </span>
+              <div className="flex items-center gap-3 mb-4">
+                {post.thumbnail ? (
+                  <span className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center text-2xl shadow-glow">
+                    {post.thumbnail}
+                  </span>
+                ) : (
+                  <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
+                    <BookOpen className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/15 text-primary border border-primary/30">
+                    {post.category}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                    <Clock className="w-3 h-3" />
+                    {post.readMinutes} min read
+                  </span>
+                </div>
               </div>
               <h2 className="text-lg sm:text-xl font-semibold tracking-tight mb-2 group-hover:text-primary transition-colors">
                 {post.en.title}

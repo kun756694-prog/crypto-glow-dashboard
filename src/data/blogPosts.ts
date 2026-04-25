@@ -977,35 +977,55 @@ export const blogPosts: BlogPost[] = [
             heading: "Security Best Practices",
             paragraphs: [
               "Never store seed phrases digitally: Write down your 12 or 24-word recovery phrase on paper or metal, never screenshot it or save it on your computer. Store copies in multiple secure, physically separated locations.",
-              "Use hardware wallets from official sources: Only buy directly from the manufacturer or authorized resellers. Never buy second-hand hardware wallets — they could be compromised.",
-              "Separate your holdings: Use a tiered approach — hot wallet for daily use with small amounts, cold wallet for savings. Consider multiple cold wallets if you have substantial holdings.",
-              "Test your backups: Before sending large amounts to any wallet, practice recovering it using your seed phrase. Verify you can access your funds before relying on the backup.",
-              "Stay vigilant: Phishing attacks target wallet users constantly. Double-check every URL, verify contract addresses, and never share your seed phrase with anyone — support teams will never ask for it.",
+              "Use hardware wallets from official sources: Only buy directly from the manufacturer or authorized resellers. Never buy second-hand hardware wallets.",
+              "Separate your holdings: Use a tiered approach — hot wallet for daily use with small amounts, cold wallet for savings.",
+              "Test your backups: Before sending large amounts to any wallet, practice recovering it using your seed phrase.",
+              "Stay vigilant: Phishing attacks target wallet users constantly. Double-check every URL and never share your seed phrase.",
             ],
           },
         ],
         conclusion:
-          "Hot wallets and cold wallets serve different purposes in a complete crypto security strategy. Use hot wallets for convenience and active use, cold wallets for long-term security. The small cost of a hardware wallet is negligible compared to the peace of mind it provides. Remember: in crypto, you are your own bank. Take that responsibility seriously, and your future self will thank you.",
+          "Hot wallets and cold wallets serve different purposes in a complete crypto security strategy. Use hot wallets for convenience and active use, cold wallets for long-term security.",
       },
     },
     my: {
-      title: "သင့် Crypto ကို လုံခြုံစွာထားခြင်း — Cold Wallets vs Hot Wallets",
+      title: "Cold Wallets vs Hot Wallets - Complete Security Guide",
       description:
-        "Hot နှင့် Cold Wallet များကြား အရေးကြီးသော ကွာခြားချက်များကို လေ့လာပါ။ သင့်လိုအပ်ချက်များအတွက် မည်သို့သိုလှောင်မှုနည်းလမ်းမှန်ကန်သည်ကို ရှာဖွေပြီး သင့်ရဲ့ Digital ပိုင်ဆိုင်မှုများကို ခိုးယူမှုပါရမည့် မည်သို့ကာကွယ်ရမည်ကို လေ့လာပါ။",
+        "Learn the differences between hot and cold wallets and how to protect your crypto assets from theft in Myanmar language.",
       content: {
         intro:
-          "မင်းပိုင်ဆိုင်သော Key များ မဟုတ်ရင်၊ မင်းပိုင်ဆိုင်သော Crypto မဟုတ်ပါ။ ဤဆောင်ပုဒ်သည် Cryptocurrency တွင် အရေးကြီးဆုံး принципကို ဖမ်းယူထားသည် — Private Keys များကို ထိန်းသိမ်းသူသည်ပင် Asset များကို ထိန်းသိမ်းသူဖြစ်သည်။ သင် ဤ Keys များကို မည်သို့သိမ်းဆည်းသည် — အင်တာနက်သို့ချိတ်ဆက်ထားသော Hot Wallet တွင် သို့မဟုတ် Offline ထားသော Cold Wallet တွင် — သင့်လုံခြုံရေးအဆင့်၊ အဆင်ပြေမှုနှင့် အန္တရာယ်ထိတွေ့မှု ကိုဆုံးဖြတ်သည်။ သင့်အခြေအနေအတွက် မမှန်ကန်သော သိမ်းဆည်းနည်းလမ်းကို ရွေးချယ်ခြင်းသည် ကြောက်မက်ဖွယ် ဆုံးရှုံးမှုများသို့ ဦးတည်နိုင်သည်။",
+          "Not your keys, not your crypto. This is the most important principle in cryptocurrency. Whoever controls the private keys controls the assets. How you store those keys determines your security level.",
         sections: [
           {
-            heading: "Hot Wallet ဆိုတာဘာလဲ",
+            heading: "Hot Wallet Definition",
             paragraphs: [
-              "Hot Wallet များသည် အင်တာနက်သို့ ချိတ်ဆက်ထားသော Cryptocurrency Wallet များဖြစ်သည်။ MetaMask ကဲ့သို့ Browser Extensions၊ Trust Wallet ကဲ့သို့ Mobile Apps နှင့် Exchange-Provided Wallets များ ပါဝင်သည်။ Hot Wallet များသည် အဆင်ပြေမှုကို ဦးစားပေး၏ — သင်သည် ချက်ချင်း သင့်ပိုက်ဆံများကို ရယူနိုင်၊ DEX များတွင် ရောင်းဝယ်နိုင် နှင့် DeFi Protocol များနှင့် ခြားနားမှုမရှိ ဆက်သွယ်နိုင်သည်။",
-              "သို့သော် ဤအဆင်ပြေမှုသည် Trade-off များနှင့်လာသည်။ Hot Wallet များသည် Online ဖြစ်သောကြောင့်၊ Hacks၊ Phishing Attacks၊ Malware နှင့် Social Engineering များအား ထိတ်လန့်စရာရှိသည်။ သင့်စက်ပစ္စည်းကို Compromise လုပ်ခြင်း သို့မဟုတ် သင်စိတ်မထားဘဲ Malicious Transaction တစ်ခုကို Approved လုပ်မိပါက၊ သင့်ပိုက်ဆံများကို စက္ကန့်ပိုင်းအတွင်း ခိုးယူသွားနိုင်သည်။",
+              "Hot wallets are connected to the internet. They include MetaMask, Trust Wallet, and exchange wallets. They prioritize convenience but are vulnerable to hacks and phishing attacks.",
+              "Because hot wallets are online, they are vulnerable. If your device is compromised, your funds can be stolen in seconds.",
             ],
           },
           {
-            heading: "Cold Wallet ဆိုတာဘာလဲ",
+            heading: "Cold Wallet Definition",
             paragraphs: [
-              "Cold Wallet များသည် Private Keys များကို လုံးဝ Offline တွင် သိမ်းဆည်းသည်။ အမှန်တကယ် အများပြည်သူအသုံးပြုမှုအဖြစ်သော သဘောသက်ရာမှာ Hardware Wallet ဖြစ်သည် — Ledger သို့မဟုတ် Trezor ကဲ့သို့သော လေးခြေသံသရာ USB Device များဖြစ်ပြီး Keys များကို Isolated Environment တွင် Generate လုပ်ပြီး သိမ်းဆည်းသည်။ Paper Wallets (Keys များ၏ Physical Printout များ) နှင့် Brain Wallets (အမှတ်ထား Keys များ) တို့လည်း Cold Storage ၏ ပုံစံများဖြစ်ကြသည်။",
-              "Cold Wallet များသည် အမြင့်ဆုံး လုံခြုံရေးအတွက် ဒီဇိုင်းထုတ်ထားသည်။ သင့်ကွန်ပျူတာသည် Malware ဖြင့် လှ},{"heading": "ဘယ်အချိန်မှာ Cold Storage လိုအပ်သလဲ", "paragraphs": ["ရေရှည်သိုလှောင်ခြင်း — လများစွာ သို့မဟုတ် နှစ်များစွာ မထိလိုသော စုငွေများ။ ဤသည်မှာ သင်၏ Crypto 'Retirement Fund' ဖြစ်ပြီး အမြင့်ဆုံး ကာကွယ်မှုကို လိုအပ်သည်။", "မြင့်မားသော ပမာဏများ — သင်ဆုံးရှုံးနိုင်မည့် ပမာဏကို ကျော်လွန်၍ သင့်ရဲ့ Holdings တိုးလာသောအခါ၊ Hardware Wallet ၏ ကုန်ကျစရိတ် ($၅၀-၁၀၀) သည် အလွန်နည်းသော အာမခံဖြစ်လာသည်။", "Peak Bull Market အခြေအနေ — ဈေးနှုန်းများ မြင့်မားပြီး လောဘများပြန့်ကျယ်သောအခါ၊ Hacks နှင့် Scams များကို ကူးသန်းရာ_MULTIPLIED အလွန်မြှင့်တင်သည်။ ဤအချိန်များအတွင်း ထပ်ဆောင်း လုံခြုံရေးသည် အလွန်အရေးကြီးသည်။", "အမွေစီမံခန့်ခွဲမှု — သင့် Heirs သို့ Crypto Asset များကို လုံခြုံစွာ ပြောင်းပြောင်းရာတွင် ပုံမှန် Seed Phrase Backup Procedures များ ပါသော Cold Wallet များသည် ပိုမိုလွယ်ကူစေသည်။"]}, {"heading": "လုံခြုံရေး အကောင်းဆုံး လေ့ကျင့်ခန်းများ", "paragraphs": ["Seed Phrases များကို Digital မသိမ်းဆည်းနိုင် — သင်၏ ၁၂ သို့မဟုတ် ၂၄-စာလုံး Recovery Phrase ကို ကွန်ပျူတာတွင် Screenshot ရိုက်ခြင်း သို့မဟုတ် သိမ်းဆည်းခြင်း မပြုပါနှင့်၊ စက္ကူ သို့မဟုတ် သတ္ထုဖြင့် ရေးပါ။ ကော်ပီကို အများကြီးပြုလုပ်ပြီး လုံခြုံသော၊ ရုပ်ပိုင်းဆိုင်ရာ ခွဲခြားထားသော နေရာများတွင် သိမ်းဆည်းပါ။", "Official အရင်းအမြစ်များမှ Hardware Wallet များ အသုံးပြုပါ — ထုတ်လုပ်သူ သို့မဟုတ် Authorized Resellers များထံမှသာ ဝယ်ယူပါ။ Second-hand Hardware Wallet များ ဘယ်တော့မှ မဝယ်ပါနှင့် — ၎င်းတို့မှာ Compromise ဖြစ်နိုင်သည်။", "သင်၏ Holdings ခွဲခြားပါ — Tiered Approach ကို အသုံးပြုပါ — နေ့စဉ်သုံး အနည်းငယ် ပမာဏများအတွက် Hot Wallet၊ စုငွေအတွက် Cold Wallet။ သိပ္ပံပိုင်ဆိုင်မှုများ ရှိပါက Hardware Wallet အများကြီးကို စဉ်းစားပါ။", "သင်၏ Backups စမ်းသပ်ပါ — မည်သည့် Wallet သို့မဆို ငွေပိုများပို့မီ၊ သင်၏ Seed Phrase ကို အသုံးပြု၍ Recover လုပ်ပုံကို လေ့ကျင့်ပါ။ Backup ကို အားကိုးမီ သင်၏ပိုက်ဆံများကို ရယူနိုင်ကြောင်း Verify လုပ်ပါ။", "စေ့စေ့စပ်စပ်ရှိပါ — Phishing Attacks များသည် Wallet User များကို နစဉ်တိုင်တိုင် Targeting လုပ်ကြသည်။ URL တိုင်းကို နှစ်ချက်စစ်ဆေးပါ၊ Contract Address များကို Verify လုပ်ပါ၊ နှင့် ဘယ်တော့မျှ သင့် Seed Phrase ကို မည်သူမှားမျှ မမျှဝေပါ — Support Team များသည် ဘယ်တော့မျှ မမေးပါ။"]}], "conclusion": "Hot Wallet များနှင့် Cold Wallet များသည် ပြီးပြည့်သော Crypto လုံခြုံရေး Strategy တွင် ကွဲပြားသော ရည်ရွယ်ချက်များကို ဆောင်သည်။ အဆင်ပြေမှုနှင့် တက်ကြွသုံးssdအတွက် Hot Wallet များ၊ ရေရှည်လုံခြုံရေးအတွက် Cold Wallet များ အသုံးပြုပါ။ Hardware Wallet ၏ သေးငယ်သော ကုန်ကျစရိတ်သည် ၎င်းပေးသော စိတ်အေးချမ်းမှုနှိုင်းယှဉ်ပါက မယူမှတ်နိုင်သော ကုန်ကျစရိတ်ဖြစ်သည်။ မှတ်ထားပါ — Crypto တွင်၊ သင်သည် သင့်ကိုယ်သင် ဘဏ်ဖြစ်သည်။ ဤတာဝန်ကို စိတ်မှန်မှန်ထားပြီး သင့်အနာဂတ် ကိုယ်တိုင်ကို ကျေးဇူးတင်ပါလိမ့်မည်။"}}}
-}];
+              "Cold wallets store keys offline. Hardware wallets like Ledger or Trezor store keys in an isolated environment, making remote theft practically impossible.",
+              "Cold wallets are designed for maximum security. Even if your computer is infected, the private keys never leave the hardware device.",
+            ],
+          },
+          {
+            heading: "Security Best Practices",
+            paragraphs: [
+              "Never store seed phrases digitally. Write them on paper or metal, never screenshot them.",
+              "Buy hardware wallets only from official sources. Never buy second-hand devices.",
+              "Use hot wallets for daily amounts, cold wallets for long-term savings.",
+              "Test your backups before relying on them.",
+            ],
+          },
+        ],
+        conclusion:
+          "Use hot wallets for convenience and cold wallets for long-term security. The cost of a hardware wallet is negligible compared to the peace of mind it provides.",
+      },
+    },
+  },
+];
+
+export const getBlogPostBySlug = (slug: string) =>
+  blogPosts.find((post) => post.slug === slug);

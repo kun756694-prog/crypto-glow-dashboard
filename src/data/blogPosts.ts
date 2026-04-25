@@ -18,6 +18,7 @@ export type BlogPost = {
   category: string;
   readMinutes: number;
   publishedOn: string; // ISO date
+  thumbnail?: string; // Optional thumbnail image path or emoji/icon identifier
   en: {
     title: string;
     description: string; // meta description / excerpt

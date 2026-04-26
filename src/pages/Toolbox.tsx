@@ -96,6 +96,48 @@ const Toolbox = () => {
           financial advice. Verify pip values and rates with your broker before trading.
         </p>
       </div>
+      {/* Roadmap Section Start */}
+      <section style={{ 
+        padding: '25px', 
+        backgroundColor: '#111', 
+        borderRadius: '15px', 
+        border: '1px solid #ff9500', 
+        marginTop: '40px', 
+        marginBottom: '40px',
+        color: '#fff',
+        boxShadow: '0 4px 15px rgba(255, 149, 0, 0.1)'
+      }}>
+        <h2 style={{ color: '#ff9500', textAlign: 'center', marginBottom: '20px' }}> Project Roadmap</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
+          <div><span style={{ color: '#00ff00' }}> Phase 1:</span> Community Launch & Free Tools (Live)</div>
+          <div style={{ padding: '10px', backgroundColor: '#222', borderRadius: '8px', borderLeft: '4px solid #ff9500' }}>
+            <span style={{ color: '#ff9500', fontWeight: 'bold' }}> Phase 2:</span> Early Registration & Airdrops (Active Now)
+          </div>
+          <div style={{ opacity: 0.5 }}> Phase 3: Token Private Sale for Early Holders (Soon)</div>
+          <div style={{ opacity: 0.5 }}> Phase 4: Listing on Crypto Exchanges</div>
+        </div>
+        
+        <div style={{ textAlign: 'center', borderTop: '1px solid #333', paddingTop: '20px' }}>
+          <p style={{ marginBottom: '15px', fontSize: '14px' }}>Register to secure your founding member status!</p>
+          <button 
+            onClick={() => window.location.href = '/register'}
+            style={{ 
+              width: '100%', 
+              padding: '14px', 
+              backgroundColor: '#ff9500', 
+              color: '#000', 
+              border: 'none', 
+              borderRadius: '8px', 
+              fontWeight: 'bold', 
+              fontSize: '16px',
+              cursor: 'pointer'
+            }}
+          >
+            Register for Early Access
+          </button>
+        </div>
+      </section>
+      {/* Roadmap Section End */}
 
       <SiteFooter />
     </div>

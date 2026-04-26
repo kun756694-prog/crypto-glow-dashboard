@@ -96,7 +96,42 @@ const Toolbox = () => {
           financial advice. Verify pip values and rates with your broker before trading.
         </p>
       </div>
-            {/* Roadmap Section with Blog Links */}
+          {/* Clean Roadmap Section */}
+      <section style={{ 
+        padding: '25px', 
+        backgroundColor: '#111', 
+        borderRadius: '15px', 
+        border: '1px solid #ff9500', 
+        marginTop: '40px', 
+        marginBottom: '40px',
+        color: '#fff'
+      }}>
+        <h2 style={{ color: '#ff9500', textAlign: 'center', marginBottom: '20px' }}>🚀 Project Roadmap</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          
+          {/* Phase 1 */}
+          <div style={{ padding: '10px', borderBottom: '1px solid #333' }}>
+            <span style={{ color: '#00ff00' }}>✅ Phase 1:</span> Crypto Trading Tools (Live)
+          </div>
+
+          {/* Phase 2 */}
+          <div style={{ padding: '10px', backgroundColor: '#222', borderRadius: '8px', borderLeft: '4px solid #ff9500' }}>
+            <span style={{ color: '#ff9500', fontWeight: 'bold' }}>🔵 Phase 2:</span> Forex & Crypto Registration (Active Now)
+          </div>
+
+          <div style={{ padding: '10px', opacity: 0.5 }}>⚪ Phase 3: Token Private Sale (Soon)</div>
+        </div>
+        
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button 
+            onClick={() => window.location.href = '/register'}
+            style={{ width: '100%', padding: '15px', backgroundColor: '#ff9500', color: '#000', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            Register for Early Access
+          </button>
+        </div>
+      </section>
+
       <section style={{ 
         padding: '25px', 
         backgroundColor: '#111', 

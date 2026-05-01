@@ -6,7 +6,7 @@ import { TradingViewChart } from '@/components/toolbox/TradingViewChart';
 const Toolbox = () => {
   return (
     <div className="min-h-screen bg-black text-white">
-      <SiteHeader />
+      <MainNav />
       
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-orange-500 mb-8 text-center">Global Trading Toolbox</h1>

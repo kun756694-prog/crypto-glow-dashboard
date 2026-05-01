@@ -1,5 +1,9 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { MainNav } from "@/components/MainNav";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
 
@@ -37,6 +41,9 @@ const Earn = () => {
             onLoad={() => setSurveyLoaded(true)}
           />
         </section>
+
+        {/* Withdraw Rewards */}
+        <WithdrawRewards />
 
         {/* Live Exchange Rates */}
         <div className="mb-12 glass-card p-4">
@@ -95,6 +102,86 @@ const Earn = () => {
 
       <SiteFooter />
     </div>
+  );
+};
+
+const WithdrawRewards = () => {
+  const [walletAddress, setWalletAddress] = useState("");
+  const [points, setPoints] = useState("");
+  const [network, setNetwork] = useState("");
+
+  const handleSubmit = () => {
+    if (!walletAddress.trim()) {
+      toast.error("Please enter your Bitcoin wallet address.");
+      return;
+    }
+    const pts = parseInt(points, 10);
+    if (isNaN(pts) || pts < 5000) {
+      toast.error("Minimum 5,000 points required to redeem.");
+      return;
+    }
+    if (!network) {
+      toast.error("Please select a network.");
+      return;
+    }
+    toast.success("Request sent! We will process your Bitcoin payment to your wallet within 24 hours.");
+    setWalletAddress("");
+    setPoints("");
+    setNetwork("");
+  };
+
+  return (
+    <section className="mb-12 glass-card p-4 sm:p-6">
+      <h2 className="text-xl font-semibold mb-6 text-primary">
+        💰 Withdraw Rewards
+      </h2>
+      <div className="space-y-4 max-w-lg mx-auto">
+        <div>
+          <label className="block text-sm font-medium text-muted-foreground mb-1">
+            Bitcoin Wallet Address
+          </label>
+          <Input
+            placeholder="Enter your BTC wallet address"
+            value={walletAddress}
+            onChange={(e) => setWalletAddress(e.target.value)}
+            className="bg-background/50 border-primary/30 focus:border-primary"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-muted-foreground mb-1">
+            Points to Redeem <span className="text-xs">(Min: 5,000)</span>
+          </label>
+          <Input
+            type="number"
+            placeholder="5000"
+            min={5000}
+            value={points}
+            onChange={(e) => setPoints(e.target.value)}
+            className="bg-background/50 border-primary/30 focus:border-primary"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-muted-foreground mb-1">
+            Network
+          </label>
+          <Select value={network} onValueChange={setNetwork}>
+            <SelectTrigger className="bg-background/50 border-primary/30">
+              <SelectValue placeholder="Select network" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="bitcoin-mainnet">Bitcoin (Mainnet)</SelectItem>
+              <SelectItem value="solana-sobtc">Solana (soBTC)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <Button
+          onClick={handleSubmit}
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+        >
+          Submit Withdrawal
+        </Button>
+      </div>
+    </section>
   );
 };
 

@@ -42,6 +42,9 @@ const Earn = () => {
           />
         </section>
 
+        {/* Withdraw Rewards */}
+        <WithdrawRewards />
+
         {/* Live Exchange Rates */}
         <div className="mb-12 glass-card p-4">
           <h2 className="text-xl font-semibold mb-6 text-primary">

@@ -54,10 +54,10 @@ const App = () => (
             }
           />
           <Route
-            path="/toolbox"
+            path="/earn"
             element={
               <Suspense fallback={<RouteFallback />}>
-                <Toolbox />
+                <Earn />
               </Suspense>
             }
           />

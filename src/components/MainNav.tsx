@@ -21,9 +21,9 @@ export const MainNav = () => {
         <Coins className="w-3.5 h-3.5" />
         FDX Coin
       </NavLink>
-      <NavLink to="/toolbox" className={linkClasses}>
-        <Wrench className="w-3.5 h-3.5" />
-        Toolbox
+      <NavLink to="/earn" className={linkClasses}>
+        <Gift className="w-3.5 h-3.5" />
+        Earn
       </NavLink>
       <NavLink to="/blog" className={linkClasses}>
         <BookOpen className="w-3.5 h-3.5" />

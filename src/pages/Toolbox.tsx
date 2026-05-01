@@ -1,7 +1,7 @@
 import React from 'react';
-import SiteHeader from '@/components/layout/SiteHeader';
-import SiteFooter from '@/components/layout/SiteFooter';
-import TradingViewChart from '@/components/toolbox/TradingViewChart';
+import { MainNav } from '@/components/MainNav';
+import { SiteFooter } from '@/components/SiteFooter';
+import { TradingViewChart } from '@/components/toolbox/TradingViewChart';
 
 const Toolbox = () => {
   return (

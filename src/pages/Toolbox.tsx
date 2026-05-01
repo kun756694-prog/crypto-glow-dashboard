@@ -29,7 +29,7 @@ const Toolbox = () => {
         {/* Chart အပိုင်း */}
         <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 mb-12">
           <h2 className="text-xl font-semibold mb-4 text-orange-400 font-mono">XAU / USD - Gold Spot</h2>
-          <TradingViewChart symbol="OANDA:XAUUSD" height={450} />
+          <TradingViewChart symbol="OANDA:XAUUSD" title="XAU/USD" containerId="tv-xauusd" height={450} />
         </div>
 
         {/* Roadmap အပိုင်း */}

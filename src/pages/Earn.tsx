@@ -28,10 +28,10 @@ const Earn = () => {
           )}
 
           <iframe
-            src="https://www.cpx-research.com"
+            src="https://offers.cpx-research.com/index.php?app_id=32780&ext_user_id=founder_hein&username=heinlay&email=heinlay010002@gmail.com"
             title="CPX Research Surveys"
             width="100%"
-            height="600"
+            height="1500px"
             frameBorder="0"
             className={`w-full rounded-lg ${surveyLoaded ? "" : "hidden"}`}
             onLoad={() => setSurveyLoaded(true)}

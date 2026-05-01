@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Sparkles, Coins, Megaphone, Briefcase, Wrench, BookOpen } from "lucide-react";
+import { Sparkles, Coins, Megaphone, Briefcase, Gift, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const MainNav = () => {

@@ -13,7 +13,7 @@ const Investors = lazy(() => import("./pages/Investors"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const Toolbox = lazy(() => import("./pages/Toolbox"));
+const Earn = lazy(() => import("./pages/Earn"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 

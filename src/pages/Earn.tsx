@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

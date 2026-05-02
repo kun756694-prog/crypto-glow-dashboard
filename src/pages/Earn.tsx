@@ -147,11 +147,11 @@ const WithdrawRewards = () => {
       return;
     }
 
-    const { error } = await supabase.from("survey_results").insert({
+    const { error } = await supabase.from("withdrawals").insert({
       wallet_address: walletAddress.trim(),
       points: pts,
       network,
-    });
+    } as any);
 
     if (error) {
       toast.error("Something went wrong. Please try again.");

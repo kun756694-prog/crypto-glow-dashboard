@@ -96,6 +96,14 @@ const App = () => (
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route
+            path="/secret-admin"
+            element={
+              <Suspense fallback={<RouteFallback />}>
+                <SecretAdmin />
+              </Suspense>
+            }
+          />
+          <Route
             path="*"
             element={
               <Suspense fallback={<RouteFallback />}>

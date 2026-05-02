@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
@@ -10,15 +10,36 @@ import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
 
 const Earn = () => {
   const [surveyLoaded, setSurveyLoaded] = useState(false);
+  const [totalPoints, setTotalPoints] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchPoints = async () => {
+      const { data, error } = await supabase
+        .from("survey_results")
+        .select("points");
+      if (!error && data) {
+        setTotalPoints(data.reduce((sum, r) => sum + r.points, 0));
+      }
+    };
+    fetchPoints();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <MainNav />
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-primary mb-8 text-center">
+        <h1 className="text-3xl font-bold text-primary mb-4 text-center">
           Earn Rewards
         </h1>
+
+        {/* Total Points */}
+        <div className="glass-card p-6 mb-8 text-center max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground mb-1">Your Total Points</p>
+          <p className="text-4xl font-bold text-primary">
+            {totalPoints !== null ? totalPoints.toLocaleString() : "—"}
+          </p>
+        </div>
 
         {/* CPX Research Survey Wall */}
         <section className="mb-12 glass-card p-4 sm:p-6">

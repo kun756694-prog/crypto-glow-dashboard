@@ -29,9 +29,17 @@ const Earn = () => {
       <MainNav />
 
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-primary mb-8 text-center">
+        <h1 className="text-3xl font-bold text-primary mb-4 text-center">
           Earn Rewards
         </h1>
+
+        {/* Total Points */}
+        <div className="glass-card p-6 mb-8 text-center max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground mb-1">Your Total Points</p>
+          <p className="text-4xl font-bold text-primary">
+            {totalPoints !== null ? totalPoints.toLocaleString() : "—"}
+          </p>
+        </div>
 
         {/* CPX Research Survey Wall */}
         <section className="mb-12 glass-card p-4 sm:p-6">

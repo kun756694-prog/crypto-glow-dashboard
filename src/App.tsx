@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 // Code-split secondary routes so they don't bloat the initial bundle
 const FdxCoin = lazy(() => import("./pages/FdxCoin"));
 const Advertise = lazy(() => import("./pages/Advertise"));
+const SecretAdmin = lazy(() => import("./pages/SecretAdmin"));
 const Investors = lazy(() => import("./pages/Investors"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));

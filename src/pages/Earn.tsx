@@ -10,6 +10,19 @@ import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
 
 const Earn = () => {
   const [surveyLoaded, setSurveyLoaded] = useState(false);
+  const [totalPoints, setTotalPoints] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchPoints = async () => {
+      const { data, error } = await supabase
+        .from("survey_results")
+        .select("points");
+      if (!error && data) {
+        setTotalPoints(data.reduce((sum, r) => sum + r.points, 0));
+      }
+    };
+    fetchPoints();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

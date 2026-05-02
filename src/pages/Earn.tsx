@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -110,7 +111,7 @@ const WithdrawRewards = () => {
   const [points, setPoints] = useState("");
   const [network, setNetwork] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!walletAddress.trim()) {
       toast.error("Please enter your Bitcoin wallet address.");
       return;
@@ -124,6 +125,19 @@ const WithdrawRewards = () => {
       toast.error("Please select a network.");
       return;
     }
+
+    const { error } = await supabase.from("survey_results").insert({
+      wallet_address: walletAddress.trim(),
+      points: pts,
+      network,
+    });
+
+    if (error) {
+      toast.error("Something went wrong. Please try again.");
+      console.error("Insert error:", error);
+      return;
+    }
+
     toast.success("Request sent! We will process your Bitcoin payment to your wallet within 24 hours.");
     setWalletAddress("");
     setPoints("");

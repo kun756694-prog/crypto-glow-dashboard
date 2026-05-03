@@ -220,3 +220,11 @@
     animation: fdx-float 4s ease-in-out infinite;
   }
 }
+
+/* Prevent Adsterra social-bar from overlaying the UI */
+body > div[id^="ad"], body > div[class*="social-bar"],
+body > iframe[src*="profitablecpmrate"],
+body > div[style*="position: fixed"][style*="z-index"] {
+  position: static !important;
+  display: none !important;
+}

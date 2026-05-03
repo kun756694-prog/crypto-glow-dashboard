@@ -5,6 +5,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { MainNav } from "@/components/MainNav";
 import { PriceTicker } from "@/components/PriceTicker";
 import { SiteFooter } from "@/components/SiteFooter";
+const SpecialAds = lazy(() => import("@/components/SpecialAds").then(m => ({ default: m.SpecialAds })));
 import { useCryptoData } from "@/hooks/useCryptoData";
 
 // Below-the-fold components — lazy-loaded to shrink the initial JS bundle
@@ -106,6 +107,10 @@ const Index = () => {
 
             <Suspense fallback={<div className="mt-8 min-h-[400px]" />}>
               <CryptoNews />
+            </Suspense>
+
+            <Suspense fallback={<div className="mt-8 min-h-[90px]" />}>
+              <SpecialAds />
             </Suspense>
           </>
         )}

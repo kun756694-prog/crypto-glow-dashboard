@@ -1,9 +1,32 @@
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { Mail, Megaphone } from "lucide-react";
 
 export const SiteFooter = () => {
   return (
     <footer className="relative mt-16 border-t border-border/40">
+      {/* Advertisement Card */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+        <div className="glass-card p-6 flex flex-col items-center justify-center min-h-[120px] text-center">
+          <div className="flex items-center gap-2 mb-3">
+            <Megaphone className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-bold tracking-tight">Advertisement</h3>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Sponsored content will appear here.
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">
+            Want to advertise?{" "}
+            <a
+              href="https://wa.me/601114614878"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              Contact us
+            </a>
+          </p>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="glass-card p-6 sm:p-8">
           <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl">

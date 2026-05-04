@@ -1,1 +1,0 @@
-DROP POLICY IF EXISTS "Anyone can update withdrawals" ON public.withdrawals;

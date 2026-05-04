@@ -10,7 +10,7 @@ Deno.serve(async (req) => {
   const adminSecret = Deno.env.get("ADMIN_SECRET");
   const providedSecret = req.headers.get("x-admin-secret");
 
-  if (!adminSecret || providedSecret !== adminSecret) {
+  if (!adminSecret || !providedSecret || providedSecret !== adminSecret) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -26,7 +26,8 @@ Deno.serve(async (req) => {
   const action = url.searchParams.get("action");
 
   try {
-    if (req.method === "GET" && action === "list") {
+    // Default GET: list all data
+    if (req.method === "GET") {
       const [surveyRes, withdrawRes] = await Promise.all([
         supabase.from("survey_results").select("*").order("created_at", { ascending: false }),
         supabase.from("withdrawals").select("*").order("created_at", { ascending: false }),
@@ -42,8 +43,17 @@ Deno.serve(async (req) => {
 
     if (req.method === "POST" && action === "mark-paid") {
       const { id } = await req.json();
-      if (!id || typeof id !== "string") {
+      if (!id || typeof id !== "string" || id.length > 50) {
         return new Response(JSON.stringify({ error: "Invalid ID" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      // Validate UUID format
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(id)) {
+        return new Response(JSON.stringify({ error: "Invalid ID format" }), {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });

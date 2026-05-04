@@ -14,11 +14,15 @@ const Earn = () => {
 
   useEffect(() => {
     const fetchPoints = async () => {
-      const { data, error } = await supabase
-        .from("survey_results")
-        .select("points");
-      if (!error && data) {
-        setTotalPoints(data.reduce((sum, r) => sum + r.points, 0));
+      try {
+        const { data, error } = await supabase.functions.invoke("get-points", {
+          method: "GET",
+        });
+        if (!error && data) {
+          setTotalPoints(data.total ?? 0);
+        }
+      } catch (e) {
+        console.error("Failed to fetch points:", e);
       }
     };
     fetchPoints();
@@ -131,10 +135,11 @@ const WithdrawRewards = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [points, setPoints] = useState("");
   const [network, setNetwork] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     if (!walletAddress.trim()) {
-      toast.error("Please enter your Bitcoin wallet address.");
+      toast.error("Please enter your wallet address.");
       return;
     }
     const pts = parseInt(points, 10);
@@ -147,22 +152,37 @@ const WithdrawRewards = () => {
       return;
     }
 
-    const { error } = await supabase.from("withdrawals").insert({
-      wallet_address: walletAddress.trim(),
-      points: pts,
-      network,
-    } as any);
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-withdrawal", {
+        body: {
+          wallet_address: walletAddress.trim(),
+          points: pts,
+          network,
+        },
+      });
 
-    if (error) {
+      if (error) {
+        toast.error("Something went wrong. Please try again.");
+        console.error("Withdrawal error:", error);
+        return;
+      }
+
+      if (data?.error) {
+        toast.error(data.error);
+        return;
+      }
+
+      toast.success("Request sent! We will process your payment to your wallet within 24 hours.");
+      setWalletAddress("");
+      setPoints("");
+      setNetwork("");
+    } catch (e) {
       toast.error("Something went wrong. Please try again.");
-      console.error("Insert error:", error);
-      return;
+      console.error("Withdrawal error:", e);
+    } finally {
+      setSubmitting(false);
     }
-
-    toast.success("Request sent! We will process your Bitcoin payment to your wallet within 24 hours.");
-    setWalletAddress("");
-    setPoints("");
-    setNetwork("");
   };
 
   return (
@@ -173,13 +193,14 @@ const WithdrawRewards = () => {
       <div className="space-y-4 max-w-lg mx-auto">
         <div>
           <label className="block text-sm font-medium text-muted-foreground mb-1">
-            Bitcoin Wallet Address
+            Wallet Address
           </label>
           <Input
-            placeholder="Enter your BTC wallet address"
+            placeholder="Enter your BTC or SOL wallet address"
             value={walletAddress}
             onChange={(e) => setWalletAddress(e.target.value)}
             className="bg-background/50 border-primary/30 focus:border-primary"
+            maxLength={100}
           />
         </div>
         <div>
@@ -190,6 +211,7 @@ const WithdrawRewards = () => {
             type="number"
             placeholder="5000"
             min={5000}
+            max={1000000}
             value={points}
             onChange={(e) => setPoints(e.target.value)}
             className="bg-background/50 border-primary/30 focus:border-primary"
@@ -211,9 +233,10 @@ const WithdrawRewards = () => {
         </div>
         <Button
           onClick={handleSubmit}
+          disabled={submitting}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
         >
-          Submit Withdrawal
+          {submitting ? "Submitting..." : "Submit Withdrawal"}
         </Button>
       </div>
     </section>

@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -11,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Download, CheckCircle } from "lucide-react";
+import { Download, CheckCircle, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
@@ -33,30 +34,104 @@ interface WithdrawalRow {
 }
 
 const SecretAdmin = () => {
+  const [adminSecret, setAdminSecret] = useState(() => sessionStorage.getItem("admin_secret") || "");
+  const [authenticated, setAuthenticated] = useState(false);
+  const [secretInput, setSecretInput] = useState("");
   const [surveys, setSurveys] = useState<SurveyRow[]>([]);
   const [withdrawals, setWithdrawals] = useState<WithdrawalRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
 
-  const loadData = async () => {
-    const [surveyRes, withdrawRes] = await Promise.all([
-      supabase.from("survey_results").select("*").order("created_at", { ascending: false }),
-      supabase.from("withdrawals").select("*").order("created_at", { ascending: false }),
-    ]);
-    if (surveyRes.data) setSurveys(surveyRes.data);
-    if (withdrawRes.data) setWithdrawals(withdrawRes.data as WithdrawalRow[]);
-    setLoading(false);
+  const authenticate = async (secret: string) => {
+    setAuthLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-data", {
+        method: "GET",
+        headers: { "x-admin-secret": secret },
+        body: undefined,
+      });
+
+      // supabase.functions.invoke returns error for non-2xx
+      if (error) {
+        toast.error("Invalid admin password.");
+        sessionStorage.removeItem("admin_secret");
+        setAuthenticated(false);
+        return;
+      }
+
+      sessionStorage.setItem("admin_secret", secret);
+      setAdminSecret(secret);
+      setAuthenticated(true);
+      setSurveys(data.surveys || []);
+      setWithdrawals(data.withdrawals || []);
+    } catch {
+      toast.error("Failed to authenticate.");
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
-  useEffect(() => { loadData(); }, []);
+  const loadData = async () => {
+    if (!adminSecret) return;
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-data", {
+        method: "GET",
+        headers: { "x-admin-secret": adminSecret },
+        body: undefined,
+      });
 
-  const markPaid = async (id: string) => {
-    const { error } = await (supabase.from("withdrawals") as any).update({ status: "completed" }).eq("id", id);
-    if (error) {
-      toast.error("Failed to update status.");
+      if (error) {
+        toast.error("Session expired. Please re-authenticate.");
+        setAuthenticated(false);
+        sessionStorage.removeItem("admin_secret");
+        return;
+      }
+
+      setSurveys(data.surveys || []);
+      setWithdrawals(data.withdrawals || []);
+    } catch {
+      toast.error("Failed to load data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Try auto-auth from session on mount
+  useEffect(() => {
+    const stored = sessionStorage.getItem("admin_secret");
+    if (stored) {
+      authenticate(stored);
+    }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!secretInput.trim()) {
+      toast.error("Please enter the admin password.");
       return;
     }
-    toast.success("Marked as paid!");
-    setWithdrawals((prev) => prev.map((w) => (w.id === id ? { ...w, status: "completed" } : w)));
+    authenticate(secretInput.trim());
+  };
+
+  const markPaid = async (id: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-data?action=mark-paid", {
+        method: "POST",
+        headers: { "x-admin-secret": adminSecret },
+        body: { id },
+      });
+
+      if (error || data?.error) {
+        toast.error("Failed to update status.");
+        return;
+      }
+
+      toast.success("Marked as paid!");
+      setWithdrawals((prev) => prev.map((w) => (w.id === id ? { ...w, status: "completed" } : w)));
+    } catch {
+      toast.error("Failed to update status.");
+    }
   };
 
   const exportCSV = (type: "surveys" | "withdrawals") => {
@@ -64,11 +139,11 @@ const SecretAdmin = () => {
     let filename: string;
     if (type === "surveys") {
       csv = "ID,Wallet Address,Points,Network,Created At\n" +
-        surveys.map((r) => `${r.id},${r.wallet_address},${r.points},${r.network},${r.created_at}`).join("\n");
+        surveys.map((r) => `"${r.id}","${r.wallet_address}",${r.points},"${r.network}","${r.created_at}"`).join("\n");
       filename = "survey_results.csv";
     } else {
       csv = "ID,Wallet Address,Network,Points,Status,Created At\n" +
-        withdrawals.map((r) => `${r.id},${r.wallet_address},${r.network},${r.points},${r.status},${r.created_at}`).join("\n");
+        withdrawals.map((r) => `"${r.id}","${r.wallet_address}","${r.network}",${r.points},"${r.status}","${r.created_at}"`).join("\n");
       filename = "withdrawals.csv";
     }
     const blob = new Blob([csv], { type: "text/csv" });
@@ -80,11 +155,59 @@ const SecretAdmin = () => {
     URL.revokeObjectURL(url);
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("admin_secret");
+    setAdminSecret("");
+    setAuthenticated(false);
+    setSurveys([]);
+    setWithdrawals([]);
+    setSecretInput("");
+  };
+
+  // Auth gate
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <MainNav />
+        <main className="container mx-auto px-4 py-20 flex items-center justify-center">
+          <div className="glass-card p-8 max-w-sm w-full text-center">
+            <Lock className="w-12 h-12 text-primary mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-primary mb-2">Admin Access</h1>
+            <p className="text-sm text-muted-foreground mb-6">Enter admin password to continue.</p>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <Input
+                type="password"
+                placeholder="Admin password"
+                value={secretInput}
+                onChange={(e) => setSecretInput(e.target.value)}
+                className="bg-background/50 border-primary/30 focus:border-primary"
+                autoFocus
+              />
+              <Button
+                type="submit"
+                disabled={authLoading}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+              >
+                {authLoading ? "Verifying..." : "Login"}
+              </Button>
+            </form>
+          </div>
+        </main>
+        <SiteFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <MainNav />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-primary mb-8">Admin Dashboard</h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+          <Button onClick={handleLogout} variant="outline" size="sm">
+            Logout
+          </Button>
+        </div>
 
         {/* Stats */}
         <div className="glass-card p-4 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -106,6 +229,13 @@ const SecretAdmin = () => {
           </div>
         </div>
 
+        {/* Refresh */}
+        <div className="mb-4 flex justify-end">
+          <Button onClick={loadData} variant="outline" size="sm" disabled={loading}>
+            {loading ? "Refreshing..." : "Refresh Data"}
+          </Button>
+        </div>
+
         {/* Withdrawal Requests */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -115,9 +245,7 @@ const SecretAdmin = () => {
             </Button>
           </div>
           <div className="glass-card overflow-hidden">
-            {loading ? (
-              <p className="p-8 text-center text-muted-foreground animate-pulse">Loading…</p>
-            ) : withdrawals.length === 0 ? (
+            {withdrawals.length === 0 ? (
               <p className="p-8 text-center text-muted-foreground">No withdrawal requests yet.</p>
             ) : (
               <Table>
@@ -169,9 +297,7 @@ const SecretAdmin = () => {
             </Button>
           </div>
           <div className="glass-card overflow-hidden">
-            {loading ? (
-              <p className="p-8 text-center text-muted-foreground animate-pulse">Loading…</p>
-            ) : surveys.length === 0 ? (
+            {surveys.length === 0 ? (
               <p className="p-8 text-center text-muted-foreground">No submissions yet.</p>
             ) : (
               <Table>

@@ -1,5 +1,10 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
+import { corsHeaders as baseCorsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
+
+const corsHeaders = {
+  ...baseCorsHeaders,
+  "Access-Control-Allow-Headers": (baseCorsHeaders["Access-Control-Allow-Headers"] || "") + ", x-admin-secret",
+};
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {

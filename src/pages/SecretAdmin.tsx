@@ -34,7 +34,7 @@ interface WithdrawalRow {
 }
 
 const SecretAdmin = () => {
-  const [adminSecret, setAdminSecret] = useState(() => sessionStorage.getItem("admin_secret") || "");
+  const [adminSecret, setAdminSecret] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [secretInput, setSecretInput] = useState("");
   const [surveys, setSurveys] = useState<SurveyRow[]>([]);
@@ -51,15 +51,12 @@ const SecretAdmin = () => {
         body: undefined,
       });
 
-      // supabase.functions.invoke returns error for non-2xx
       if (error) {
         toast.error("Invalid admin password.");
-        sessionStorage.removeItem("admin_secret");
         setAuthenticated(false);
         return;
       }
 
-      sessionStorage.setItem("admin_secret", secret);
       setAdminSecret(secret);
       setAuthenticated(true);
       setSurveys(data.surveys || []);
@@ -84,7 +81,6 @@ const SecretAdmin = () => {
       if (error) {
         toast.error("Session expired. Please re-authenticate.");
         setAuthenticated(false);
-        sessionStorage.removeItem("admin_secret");
         return;
       }
 
@@ -97,13 +93,7 @@ const SecretAdmin = () => {
     }
   };
 
-  // Try auto-auth from session on mount
-  useEffect(() => {
-    const stored = sessionStorage.getItem("admin_secret");
-    if (stored) {
-      authenticate(stored);
-    }
-  }, []);
+  // No auto-auth — secret is kept in memory only for security
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,7 +146,6 @@ const SecretAdmin = () => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("admin_secret");
     setAdminSecret("");
     setAuthenticated(false);
     setSurveys([]);

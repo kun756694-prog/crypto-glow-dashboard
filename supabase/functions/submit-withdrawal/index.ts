@@ -57,33 +57,24 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // Check total earned points vs already-withdrawn points
-    const { data: totalEarned } = await supabase.rpc("get_total_points");
-    const { data: withdrawals } = await supabase
-      .from("withdrawals")
-      .select("points")
-      .in("status", ["pending", "completed"]);
+    // Atomic balance check + insert via DB function
+    const { data, error } = await supabase.rpc("atomic_withdraw", {
+      p_wallet_address: addr,
+      p_points: pts,
+      p_network: network,
+    });
 
-    const alreadyWithdrawn = (withdrawals || []).reduce((sum: number, w: any) => sum + w.points, 0);
-    const available = (totalEarned || 0) - alreadyWithdrawn;
-
-    if (pts > available) {
-      return new Response(JSON.stringify({ error: `Insufficient balance. Available: ${available} points.` }), {
-        status: 400,
+    if (error) {
+      console.error("RPC error:", error);
+      return new Response(JSON.stringify({ error: "Failed to submit withdrawal request." }), {
+        status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const { error } = await supabase.from("withdrawals").insert({
-      wallet_address: addr,
-      points: pts,
-      network,
-    });
-
-    if (error) {
-      console.error("Insert error:", error);
-      return new Response(JSON.stringify({ error: "Failed to submit withdrawal request." }), {
-        status: 500,
+    if (!data?.success) {
+      return new Response(JSON.stringify({ error: data?.error || "Withdrawal failed." }), {
+        status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }

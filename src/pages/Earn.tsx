@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
+import { Gift } from "lucide-react";
 
 const Earn = () => {
   const [surveyLoaded, setSurveyLoaded] = useState(false);
@@ -44,6 +45,9 @@ const Earn = () => {
             {totalPoints !== null ? totalPoints.toLocaleString() : "—"}
           </p>
         </div>
+
+        {/* Watch Ad for Rewards */}
+        <WatchAdBonus />
 
         {/* CPX Research Survey Wall */}
         <section className="mb-12 glass-card p-4 sm:p-6">
@@ -128,6 +132,52 @@ const Earn = () => {
 
       <SiteFooter />
     </div>
+  );
+};
+
+const WatchAdBonus = () => {
+  const [cooldown, setCooldown] = useState(false);
+
+  const handleWatchAd = useCallback(() => {
+    if (cooldown) {
+      toast.info("Please wait before collecting another bonus.");
+      return;
+    }
+
+    // Load Monetag popunder script dynamically
+    if (!document.querySelector('script[data-zone="236309"]')) {
+      const s = document.createElement("script");
+      s.src = "https://quge5.com/88/tag.min.js";
+      s.dataset.zone = "236309";
+      s.async = true;
+      s.setAttribute("data-cfasync", "false");
+      document.body.appendChild(s);
+    }
+
+    // Open a pop-under / trigger the ad
+    window.open("about:blank", "_blank");
+
+    toast.success("🎁 Daily bonus collected! +50 points");
+    setCooldown(true);
+    setTimeout(() => setCooldown(false), 30_000); // 30s cooldown
+  }, [cooldown]);
+
+  return (
+    <section className="mb-8 glass-card p-6 text-center max-w-md mx-auto">
+      <h2 className="text-lg font-semibold mb-2 text-primary">🎁 Daily Bonus</h2>
+      <p className="text-sm text-muted-foreground mb-4">
+        Watch a short ad to collect bonus points every day!
+      </p>
+      <Button
+        onClick={handleWatchAd}
+        disabled={cooldown}
+        size="lg"
+        className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold text-base gap-2"
+      >
+        <Gift className="w-5 h-5" />
+        {cooldown ? "Bonus Collected — Come Back Soon!" : "Collect Daily Bonus"}
+      </Button>
+    </section>
   );
 };
 

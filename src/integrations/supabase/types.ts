@@ -70,6 +70,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      atomic_withdraw: {
+        Args: { p_network: string; p_points: number; p_wallet_address: string }
+        Returns: Json
+      }
       get_total_points: { Args: never; Returns: number }
     }
     Enums: {

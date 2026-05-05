@@ -46,6 +46,9 @@ const Earn = () => {
           </p>
         </div>
 
+        {/* Watch Ad for Rewards */}
+        <WatchAdBonus />
+
         {/* CPX Research Survey Wall */}
         <section className="mb-12 glass-card p-4 sm:p-6">
           <h2 className="text-xl font-semibold mb-4 text-primary">

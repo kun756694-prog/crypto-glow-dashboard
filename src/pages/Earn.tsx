@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { MainNav } from "@/components/MainNav";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
+import { Gift } from "lucide-react";
 
 const Earn = () => {
   const [surveyLoaded, setSurveyLoaded] = useState(false);

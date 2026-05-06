@@ -7,20 +7,100 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TradingViewChart } from "@/components/toolbox/TradingViewChart";
-import { Gift } from "lucide-react";
+import { Gift, Star, Sparkles } from "lucide-react";
 
+/* ── localStorage helpers ── */
+const POINTS_KEY = "earn_total_points";
+const CLICKS_KEY = "earn_daily_clicks";
+
+interface DailyClicks {
+  date: string; // YYYY-MM-DD
+  counts: Record<string, number>;
+}
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getDailyClicks(): DailyClicks {
+  try {
+    const raw = localStorage.getItem(CLICKS_KEY);
+    if (raw) {
+      const parsed: DailyClicks = JSON.parse(raw);
+      if (parsed.date === todayStr()) return parsed;
+    }
+  } catch {}
+  return { date: todayStr(), counts: {} };
+}
+
+function saveDailyClicks(dc: DailyClicks) {
+  localStorage.setItem(CLICKS_KEY, JSON.stringify(dc));
+}
+
+function getSavedPoints(): number {
+  try {
+    return parseInt(localStorage.getItem(POINTS_KEY) ?? "0", 10) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+function savePoints(p: number) {
+  localStorage.setItem(POINTS_KEY, String(p));
+}
+
+/* ── Reward button config ── */
+const REWARD_BUTTONS = [
+  {
+    id: "daily-bonus",
+    label: "Claim Daily Bonus",
+    url: "https://www.profitablecpmratenetwork.com/ziadeax47?key=280244817897c83ce7c6542678cc971d",
+    points: 5,
+    icon: Gift,
+    gradient: "from-amber-500 to-orange-600",
+    glow: "shadow-[0_0_30px_rgba(245,158,11,0.4)]",
+  },
+  {
+    id: "premium-reward",
+    label: "Premium Reward",
+    url: "https://omg10.com/4/10958497",
+    points: 10,
+    icon: Star,
+    gradient: "from-violet-500 to-purple-600",
+    glow: "shadow-[0_0_30px_rgba(139,92,246,0.4)]",
+  },
+  {
+    id: "surprise-gift",
+    label: "Surprise Gift",
+    url: "https://omg10.com/4/10958858",
+    points: 10,
+    icon: Sparkles,
+    gradient: "from-cyan-400 to-blue-600",
+    glow: "shadow-[0_0_30px_rgba(34,211,238,0.4)]",
+  },
+];
+
+const MAX_CLICKS_PER_DAY = 3;
+
+/* ── Main page ── */
 const Earn = () => {
   const [surveyLoaded, setSurveyLoaded] = useState(false);
-  const [totalPoints, setTotalPoints] = useState<number | null>(null);
+  const [points, setPoints] = useState(getSavedPoints);
+  const [dailyClicks, setDailyClicks] = useState<DailyClicks>(getDailyClicks);
 
+  // Also fetch server-side points for display (use higher of local vs server)
   useEffect(() => {
     const fetchPoints = async () => {
       try {
         const { data, error } = await supabase.functions.invoke("get-points", {
           method: "GET",
         });
-        if (!error && data) {
-          setTotalPoints(data.total ?? 0);
+        if (!error && data && typeof data.total === "number") {
+          setPoints((prev) => {
+            const best = Math.max(prev, data.total);
+            savePoints(best);
+            return best;
+          });
         }
       } catch (e) {
         console.error("Failed to fetch points:", e);
@@ -28,6 +108,36 @@ const Earn = () => {
     };
     fetchPoints();
   }, []);
+
+  const handleRewardClick = useCallback(
+    (id: string, url: string, rewardPoints: number) => {
+      const dc = getDailyClicks();
+      const used = dc.counts[id] ?? 0;
+
+      if (used >= MAX_CLICKS_PER_DAY) {
+        toast.info("Limit reached. Come back tomorrow!");
+        return;
+      }
+
+      // Open link
+      window.open(url, "_blank", "noopener,noreferrer");
+
+      // Update clicks
+      dc.counts[id] = used + 1;
+      saveDailyClicks(dc);
+      setDailyClicks({ ...dc });
+
+      // Update points
+      const newPoints = points + rewardPoints;
+      savePoints(newPoints);
+      setPoints(newPoints);
+
+      toast.success(`+${rewardPoints} points earned! 🎉`);
+    },
+    [points],
+  );
+
+  const getClicksUsed = (id: string) => dailyClicks.counts[id] ?? 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -38,16 +148,47 @@ const Earn = () => {
           Earn Rewards
         </h1>
 
-        {/* Total Points */}
+        {/* Point Balance */}
         <div className="glass-card p-6 mb-8 text-center max-w-md mx-auto">
-          <p className="text-sm text-muted-foreground mb-1">Your Total Points</p>
+          <p className="text-sm text-muted-foreground mb-1">Your Point Balance</p>
           <p className="text-4xl font-bold text-primary">
-            {totalPoints !== null ? totalPoints.toLocaleString() : "—"}
+            {points.toLocaleString()}
           </p>
         </div>
 
-        {/* Watch Ad for Rewards */}
-        <WatchAdBonus />
+        {/* Reward Buttons */}
+        <section className="mb-12 max-w-lg mx-auto grid gap-5">
+          {REWARD_BUTTONS.map((btn) => {
+            const used = getClicksUsed(btn.id);
+            const limitReached = used >= MAX_CLICKS_PER_DAY;
+            const Icon = btn.icon;
+
+            return (
+              <button
+                key={btn.id}
+                disabled={limitReached}
+                onClick={() => handleRewardClick(btn.id, btn.url, btn.points)}
+                className={`relative w-full rounded-xl p-5 text-white font-semibold text-lg transition-all duration-300
+                  bg-gradient-to-r ${btn.gradient} ${btn.glow}
+                  hover:scale-[1.03] hover:brightness-110 active:scale-[0.98]
+                  disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100
+                  flex items-center gap-4`}
+              >
+                <div className="rounded-full bg-white/20 p-3">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div className="flex-1 text-left">
+                  <span className="block">{btn.label}</span>
+                  <span className="text-xs font-normal opacity-80">
+                    {limitReached
+                      ? "Limit Reached. Come back tomorrow!"
+                      : `+${btn.points} pts · ${MAX_CLICKS_PER_DAY - used} left today`}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </section>
 
         {/* CPX Research Survey Wall */}
         <section className="mb-12 glass-card p-4 sm:p-6">
@@ -132,52 +273,6 @@ const Earn = () => {
 
       <SiteFooter />
     </div>
-  );
-};
-
-const WatchAdBonus = () => {
-  const [cooldown, setCooldown] = useState(false);
-
-  const handleWatchAd = useCallback(() => {
-    if (cooldown) {
-      toast.info("Please wait before collecting another bonus.");
-      return;
-    }
-
-    // Load Monetag popunder script dynamically
-    if (!document.querySelector('script[data-zone="236309"]')) {
-      const s = document.createElement("script");
-      s.src = "https://quge5.com/88/tag.min.js";
-      s.dataset.zone = "236309";
-      s.async = true;
-      s.setAttribute("data-cfasync", "false");
-      document.body.appendChild(s);
-    }
-
-    // Open a pop-under / trigger the ad
-    window.open("about:blank", "_blank");
-
-    toast.success("🎁 Daily bonus collected! +50 points");
-    setCooldown(true);
-    setTimeout(() => setCooldown(false), 30_000); // 30s cooldown
-  }, [cooldown]);
-
-  return (
-    <section className="mb-8 glass-card p-6 text-center max-w-md mx-auto">
-      <h2 className="text-lg font-semibold mb-2 text-primary">🎁 Daily Bonus</h2>
-      <p className="text-sm text-muted-foreground mb-4">
-        Watch a short ad to collect bonus points every day!
-      </p>
-      <Button
-        onClick={handleWatchAd}
-        disabled={cooldown}
-        size="lg"
-        className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold text-base gap-2"
-      >
-        <Gift className="w-5 h-5" />
-        {cooldown ? "Bonus Collected — Come Back Soon!" : "Collect Daily Bonus"}
-      </Button>
-    </section>
   );
 };
 

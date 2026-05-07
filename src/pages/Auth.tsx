@@ -49,7 +49,8 @@ const Auth = () => {
           toast.error(error.message);
           return;
         }
-        toast.success("Account created! Please check your email to verify.");
+        toast.success("Account created! Welcome!");
+        navigate("/");
       }
     } catch {
       toast.error("Something went wrong.");

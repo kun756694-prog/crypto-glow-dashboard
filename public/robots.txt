@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://crypto-glow-dashboard.vercel.app/sitemap.xml
+Sitemap: https://crytolive-view.lovable.app/sitemap.xml

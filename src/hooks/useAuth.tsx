@@ -27,12 +27,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    // 1. Register listener FIRST so we never miss the SIGNED_IN event
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, sess) => {
       setSession(sess);
       setUser(sess?.user ?? null);
       setLoading(false);
     });
 
+    // 2. THEN hydrate the existing session
     supabase.auth.getSession().then(({ data: { session: sess } }) => {
       setSession(sess);
       setUser(sess?.user ?? null);
@@ -42,26 +44,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Check admin role
+  // Check admin role whenever the user changes
   useEffect(() => {
     if (!user) {
       setIsAdmin(false);
       return;
     }
-    const checkAdmin = async () => {
-      const { data } = await supabase
+    let cancelled = false;
+    // Defer to avoid running inside the auth state-change callback
+    const timer = setTimeout(async () => {
+      const { data, error } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", user.id)
         .eq("role", "admin")
         .maybeSingle();
-      setIsAdmin(!!data);
+      if (!cancelled) setIsAdmin(!error && !!data);
+    }, 0);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
     };
-    checkAdmin();
   }, [user]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
+    setIsAdmin(false);
   };
 
   return (
